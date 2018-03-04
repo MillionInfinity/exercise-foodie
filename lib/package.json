@@ -1,21 +1,19 @@
 {
-  "name": "foodie-list",
+  "name": "lib",
   "version": "1.0.0",
-  "description": "\"food is a popular broweser for restaurants\"",
-  "main": "foodie-list.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MillionInfinity/exercise-foodie-list.git"
-  },
-  "author": "Million Yemane",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MillionInfinity/exercise-foodie-list/issues"
+  "dependencies": {
+    "firebase": "^4.10.1",
+    "grunt": "^1.0.2",
+    "jquery": "^3.3.1"
   },
-  "homepage": "https://github.com/MillionInfinity/exercise-foodie-list#readme",
   "devDependencies": {
     "browserify": "^16.1.0",
     "grunt-browserify": "^5.2.0",
@@ -23,7 +21,6 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^20.1.0",
-    "jshint": "^2.9.5",
     "matchdep": "^2.0.0"
   }
 }

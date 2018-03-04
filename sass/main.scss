@@ -1,31 +1,3 @@
-$font-stack :;
-$primary-color: ;
-$link-color: ;
-$secondary-color: ;
-$third-color:;
-body {
-    font: 100% $font-stack;
-    color: ;
-}
-
-h1 {
-    color: ;
-    background-color: ;
-}
-
-nav {
-    ul {
-       
-        list-style: ;
-        background-color: ;
-    }
-    li {
-        display: inline-block;
-    }
-    a {
-        display:;
-        padding: ;
-        text-decoration:;
-        color: ;
-    }
+.header {
+    grid-area: hd;
 }
