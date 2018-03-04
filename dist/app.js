@@ -14,6 +14,56 @@ let db = require('./load');
 console.log("foodieList");
 
 let db = require("./load");
+
+
+
+let showItems = (restaurantData) => {
+    let restDisplay = document.getElementById("rest-display");
+    console.log("restaurantData", restaurantData);
+    restaurantData.forEach((restaurant) => {
+        // let restBlock = buildRestItem(restaurant);
+        restDisplay.innerHTML += `<section class="block-wrapper"><h2 class="rest-name">${restaurant.restaurant}</h2><h3 class="rating-btn">My Rating<br/>${restaurant.my_rating}</h3><h5 class="visited-date">Last Visited: ${restaurant.date_visited}</h5></section>`;
+
+    });
+};
+
+let restPromise = db.restaurants.loadRestaurants()
+    .then(
+        (resolve) => {
+            console.log("then resolve", resolve);
+            let sortedData = resolve.sort(function (a, b) {
+                return b.my_rating - a.my_rating;
+            });
+            showItems(sortedData);
+        },
+        (reject) => {
+            console.log("Oops Something went wrong", reject);
+        });
+
+//Cities Promise
+
+//Dont need to show this way anymore but THIS WORKS
+let showCities = (citiesData) => {
+    let citiesSelector = document.getElementById("selector");
+    console.log("citiesData", citiesData);
+    citiesData.forEach((city) => {
+        citiesSelector.innerHTML += `<option value="${city.city}><h4>${city.city}</h4></option>`;
+
+    });
+};
+let citiesPromise = db.cities.loadCities()
+    .then(
+        (resolve) => {
+            console.log("cities resolve", resolve);
+            //possibly sort cities here
+            showCities(resolve);
+            console.log("I hope this works", resolve[1].id);
+            return resolve;
+        }
+    );
+
+
+module.exports = { showItems, showCities};
 },{"./load":3}],3:[function(require,module,exports){
 "use strict";
 
@@ -109,51 +159,31 @@ console.log("hi");
 
 
 
-let showItems = (restaurantData) => {
-    let restDisplay = document.getElementById("rest-display");
-    console.log("restaurantData", restaurantData);
-    restaurantData.forEach((restaurant) => {
-        // let restBlock = buildRestItem(restaurant);
-        restDisplay.innerHTML += `<section class="block-wrapper"><h2 class="rest-name">${restaurant.restaurant}</h2><h3 class="rating-btn">My Rating<br/>${restaurant.my_rating}</h3><h5 class="visited-date">Last Visited: ${restaurant.date_visited}</h5></section>`;
-
-    });
-};
-
-let restPromise = db.restaurants.loadRestaurants()
-    .then(
-        (resolve) => {
-            console.log("then resolve", resolve);
-            let sortedData = resolve.sort(function (a, b) {
-                return b.my_rating - a.my_rating;
-            });
-            showItems(sortedData);
-        },
-        (reject) => {
-            console.log("Oops Something went wrong", reject);
-        });
-
-//Cities Promise
-
-//Dont need to show this way anymore but THIS WORKS
-let showCities = (citiesData) => {
-    let citiesSelector = document.getElementById("selector");
-    console.log("citiesData", citiesData);
-    citiesData.forEach((city) => {
-        citiesSelector.innerHTML += `<option value="${city.city}><h4>${city.city}</h4></option>`;
-        
-    });
-};
-let citiesPromise = db.cities.loadCities()
-    .then(
-        (resolve) => {
-            console.log("cities resolve", resolve);
-            //possibly sort cities here
-            showCities(resolve);
-            console.log("I hope this works", resolve[1].id);
-            return resolve;
-        }
-    );
 },{"./card-grid":1,"./foodie-list":2,"./load":3,"./search_food":5}],5:[function(require,module,exports){
 "use strict";
+let db = require('./load')
+let fl = require('./foodie-list');
+//VARIABLES
+var dropdown = document.getElementById("dropdown");
+var cityName = `<option id ="default" value="chooseCity">Choose a City</option>`;
 
-},{}]},{},[4]);
+//FUNCTION
+function showCityNames() {
+    restaurantData.getCities()
+        .then(function (resolve) {
+            var keys;
+            for (keys in resolve) {
+                var cityVar = resolve[keys].city;
+                var cityID = resolve[keys].id;
+                cityName += `<option id=${cityID} value="${cityVar}">${cityVar}</option>`;
+                // console.log("city ids: ", cityName);
+            }
+            cityName += `<option id="ViewAll" value="ViewAll">View All</option>`;
+            dropdown.innerHTML = cityName;
+        });
+}
+showCityNames();
+
+//EXPORTS
+module.exports = { showCityNames };
+},{"./foodie-list":2,"./load":3}]},{},[4]);
